@@ -2,6 +2,9 @@ class UsersController < ApplicationController
 before_action :signed_in_user, only: [:index, :edit, :update, :destroy]
 before_action :correct_user,   only: [:edit, :update]
 before_action :admin_user,     only: :destroy
+before_filter :signed_in_user_filter, only: [:new, :create]
+
+
 
   def destroy
     User.find(params[:id]).destroy
@@ -18,7 +21,7 @@ before_action :admin_user,     only: :destroy
   end
 
   def new
-    redirect_to(root_url) if signed_in?
+    # redirect_to(root_url) if signed_in?
     @user = User.new
     
   end
@@ -36,7 +39,7 @@ before_action :admin_user,     only: :destroy
   end
 
   def create
-    redirect_to(root_url) if signed_in?
+    # redirect_to(root_url) if signed_in?
     @user = User.new(user_params)
     if @user.save
       sign_in @user
@@ -49,6 +52,10 @@ before_action :admin_user,     only: :destroy
 
   private
 
+    def signed_in_user_filter
+      redirect_to root_path, notice: "Already logged in" if signed_in?
+    end
+    
     def user_params
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation)
