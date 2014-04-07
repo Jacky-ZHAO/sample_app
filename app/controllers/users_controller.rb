@@ -58,7 +58,7 @@ before_filter :signed_in_user_filter, only: [:new, :create]
     
     def user_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
+                                   :password_confirmation,)
     end
 
     def signed_in_user
