@@ -38,3 +38,37 @@ def sign_in(user, options={})
     click_button "Sign in"
   end
 end
+
+def edit_user()
+          visit edit_user_path(user)
+          fill_in "Email",    with: user.email
+          fill_in "Password", with: user.password
+          click_button "Sign in"
+end
+
+def index()
+      sign_in user
+      visit users_path
+end
+
+def pagination()
+  30.times { FactoryGirl.create(:user) }
+end
+
+def edit()
+      sign_in user
+      visit edit_user_path(user)
+end
+
+def edit_valid()
+        fill_in "Name",             with: new_name
+        fill_in "Email",            with: new_email
+        fill_in "Password",         with: user.password
+        fill_in "Confirm Password", with: user.password
+        click_button "Save changes"
+end
+
+def forbidden_attributes()
+        sign_in user, no_capybara: true
+        patch user_path(user), params
+end
