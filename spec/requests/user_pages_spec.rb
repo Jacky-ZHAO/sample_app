@@ -70,6 +70,25 @@ describe "User pages" do
     it { should have_title(full_title('Sign up')) }
   end
 
+  describe "profile page" do
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      31.times { FactoryGirl.create(:micropost, user: user) }
+      visit user_path(user)
+    end
+
+    describe "pagination" do
+
+      it { should have_selector('div.pagination') }
+
+      it "should list each micropost" do
+        user.microposts.paginate(page: 1).each do |micropost|
+          page.should have_selector('li', text: micropost.content)
+        end
+      end
+    end
+  end
+
   describe "signup" do
 
     before { visit signup_path }
