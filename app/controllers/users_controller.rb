@@ -23,6 +23,7 @@ before_filter :signed_in_user_filter, only: [:new, :create]
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def new
