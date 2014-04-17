@@ -1,7 +1,7 @@
 <%= form_for(@micropost) do |f|%>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
-    <%= f.text_area :content, placeholder: "Compose new micropost...", id:'text', onkeyup: 'count()' %>
+    <%= f.text_area :content, placeholder: "Compose new micropost...", onkeyup: 'count()' %>
   </div>
   <%= f.submit "Post", class: "btn btn-large btn-primary" %>
   <span id="micropost_char_count" style="float:right;margin-top:18px;">140 characters left</span>
@@ -10,7 +10,7 @@
 <script language="JavaScript">
 function count (){
 	var a = document.getElementById('micropost_char_count');
-	var b = document.getElementById('text');
+	var b = document.getElementById('micropost_content');
 	var left = 140 - b.value.length;
 	if (left>=0){
 		document.getElementById('micropost_char_count').style.color='black';
